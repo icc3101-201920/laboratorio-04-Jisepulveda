@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+
 
 namespace Laboratorio_3_OOP_201902
 {
@@ -96,33 +98,35 @@ namespace Laboratorio_3_OOP_201902
 
         public void DecksRead ( )
         {
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Files\Decks.txt";
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Files\Decks.txt";
+
             List<Deck> decks_txt = new List<Deck>();
 
             int contador = 0;
 
-            using (StreamReader sr = new StreamReader(path)) ;
-            {
+            Deck deckt = new Deck();
 
+            using (StreamReader reader = new StreamReader(path))
+            {
                 while (true)
                 {
-                    string line = reader.Readline();
+                    string line = reader.ReadLine() ;
 
-                    if (line = "START")
+                    if (line == "START")
                     {
                         Deck deckt = new Deck();
                     }
-                    if (line = "END")
+                    if (line == "END")
                     {
-                        decks_txt.add(deckt);
+                        decks_txt.Add(deckt);
                     }
-                    if (line = null)
+                    if (line == null)
                     {
                         break;
                     }
                     else
                     {
-                        string[] attributes = line.split(",");
+                        string[] attributes = line.Split(",");
 
                         int tipecard = 0;
 
@@ -131,15 +135,15 @@ namespace Laboratorio_3_OOP_201902
                             tipecard++;
                         }
 
-                        if (tipecard = 3)
+                        if (tipecard == 3)
                         {
                             SpecialCard specialCard = new SpecialCard(attributes[1], attributes[0], attributes[2]);
-                            deckt.add(specialCard);
+                            deckt.AddCard(specialCard);
                         }
-                        if (tipecard = 5)
+                        if (tipecard == 5)
                         {
-                            CombatCard combatcard = new CombatCard(attributes[1], attributes[0], attributes[2], convert.ToInt32(attributes[3]), convert.ToBoolean(attributes[4]));
-                            deckt.add(combatcard);
+                            CombatCard combatcard = new CombatCard(attributes[1], attributes[0], attributes[2], Int32.Parse(attributes[3]), Boolean.Parse(attributes[4]));
+                            deckt.AddCard(combatcard);
                         }
                             
                     }
